@@ -21,7 +21,7 @@ tmp/
 
 # Videos / images
 *.mp4
-*.gif
+# *.gif
 *.avi
 
 # IDE / editor
