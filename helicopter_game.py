@@ -55,7 +55,7 @@ class SpriteSheet:
 
 
 class HelicopterGame:
-    WIDTH = 360  # Render target width in pixels
+    WIDTH = 368  # Render target width in pixels
     HEIGHT = 240  # Render target height in pixels
     SCALE = 2  # Output scaling factor
     FPS = 60  # Framerate
@@ -120,20 +120,20 @@ class HelicopterGame:
         # self.info_font = pygame.font.Font(font_path, 12)
         # self.distance_font = pygame.font.Font(font_path, 18)
 
-        font_path = asset_dir / "ark-pixel-12px-monospaced-zh_cn.ttf"
-        if font_path.exists():
-            font_path_str = str(font_path)
-            self.font = pygame.font.Font(font_path_str, 12 * 2)
-            self.info_font = pygame.font.Font(font_path_str, 12)
-            self.distance_font = pygame.font.Font(font_path_str, 18)
-        else:
-            print(
-                f"Warning: font file not found at {font_path}, "
-                "using default system font instead."
-            )
-            self.font = pygame.font.SysFont("Arial", 12 * 2)
-            self.info_font = pygame.font.SysFont("Arial", 12)
-            self.distance_font = pygame.font.SysFont("Arial", 18)
+        # font_path = asset_dir / "ark-pixel-12px-monospaced-zh_cn.ttf"
+        # if font_path.exists():
+        #     font_path_str = str(font_path)
+        #     self.font = pygame.font.Font(font_path_str, 12 * 2)
+        #     self.info_font = pygame.font.Font(font_path_str, 12)
+        #     self.distance_font = pygame.font.Font(font_path_str, 18)
+        # else:
+        #     print(
+        #         f"Warning: font file not found at {font_path}, "
+        #         "using default system font instead."
+        #     )
+        self.font = pygame.font.SysFont("Arial", 12 * 2)
+        self.info_font = pygame.font.SysFont("Arial", 12)
+        self.distance_font = pygame.font.SysFont("Arial", 18)
 
         self.is_running = True
         self.show_debug_info = True
@@ -267,7 +267,7 @@ class HelicopterGame:
 
     def __draw_distance_text(self):
         distance_text = self.distance_font.render(
-            f"飞行距离: {self.distance:,}", False, (255, 255, 255)
+            f"Flying Distance: {self.distance:,}", False, (255, 255, 255)
         )
         distance_text_rect = distance_text.get_rect()
         distance_text_rect.centerx = self.WIDTH // 2
@@ -296,7 +296,7 @@ class HelicopterGame:
 
     def __draw_game_over(self):
         if self.game_over:
-            text = self.font.render("挑战失败", False, (255, 0, 0))
+            text = self.font.render("Game Over", False, (255, 0, 0))
             rect = text.get_rect(center=(self.WIDTH // 2, self.HEIGHT // 2))
             self.surface.blit(text, rect)
 

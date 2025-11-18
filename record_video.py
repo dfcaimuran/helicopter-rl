@@ -27,17 +27,66 @@ def pad_frame_to_16(frame):
     return padded
 
 
+# def record_video(
+#     model_path="tmp/rl_model_100100000_steps.zip", # best model  
+#     # model_path="tmp/rl_model_1000000_steps.zip",
+#     video_path="helicopter_run.mp4",
+#     fps=60,
+#     max_steps=30000,
+# ):
+#     print(f"Loading model: {model_path}")
+#     model = PPO.load(model_path)
+
+#     # Important: must use rgb_array mode for video recording
+#     env = HelicopterEnv(render_mode="rgb_array")
+
+#     obs, info = env.reset()
+#     frames = []
+
+#     print("Recording video...")
+
+#     for step in range(max_steps):
+#         # Choose action from trained policy
+#         action, _ = model.predict(obs, deterministic=True)
+
+#         # Step environment
+#         obs, reward, terminated, truncated, info = env.step(action)
+
+#         # Get visual frame as an RGB array
+#         frame = env.render()
+
+#         # Fix size so width/height divisible by 16 (remove FFMPEG warning)
+#         frame = pad_frame_to_16(frame)
+
+#         frames.append(frame)
+
+#         if terminated or truncated:
+#             print(f"Episode ended at step {step}")
+#             break
+
+#     env.close()
+
+#     print(f"Saving video to: {video_path}")
+#     imageio.mimsave(video_path, frames, fps=fps)
+#     print("Done! No resizing warnings.")
+
+# import imageio
+# import numpy as np
+# from stable_baselines3 import PPO
+# from helicopter_env import HelicopterEnv
+
+
 def record_video(
-    model_path="tmp/rl_model_100100000_steps.zip", # best model  
-    # model_path="tmp/rl_model_1000000_steps.zip",
+    model_path="tmp/rl_model_5000000_steps.zip",
     video_path="helicopter_run.mp4",
+    gif_path="helicopter_run.gif",
     fps=60,
     max_steps=30000,
 ):
     print(f"Loading model: {model_path}")
     model = PPO.load(model_path)
 
-    # Important: must use rgb_array mode for video recording
+    # RGB render mode
     env = HelicopterEnv(render_mode="rgb_array")
 
     obs, info = env.reset()
@@ -46,18 +95,10 @@ def record_video(
     print("Recording video...")
 
     for step in range(max_steps):
-        # Choose action from trained policy
         action, _ = model.predict(obs, deterministic=True)
-
-        # Step environment
         obs, reward, terminated, truncated, info = env.step(action)
 
-        # Get visual frame as an RGB array
-        frame = env.render()
-
-        # Fix size so width/height divisible by 16 (remove FFMPEG warning)
-        frame = pad_frame_to_16(frame)
-
+        frame = env.render()  # (H, W, 3)
         frames.append(frame)
 
         if terminated or truncated:
@@ -66,9 +107,20 @@ def record_video(
 
     env.close()
 
-    print(f"Saving video to: {video_path}")
-    imageio.mimsave(video_path, frames, fps=fps)
-    print("Done! No resizing warnings.")
+    print(f"Saving MP4 video to: {video_path}")
+    imageio.mimsave(video_path, frames, fps=fps, macro_block_size=None)
+
+    print(f"Saving GIF to: {gif_path}")
+    imageio.mimsave(
+        gif_path, 
+        frames, 
+        fps=30, 
+        loop=0,
+        palettesize=256,
+        subrectangles=True,
+    )
+
+    print("Done!")
 
 
 if __name__ == "__main__":
