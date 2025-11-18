@@ -1,4 +1,30 @@
-__pycache__/
+# __pycache__/
 .vscode/
 *.json
+# tmp/
+
+# Python
+__pycache__/
+*.pyc
+
+# Virtual env
+.venv/
+.venv*/
+env/
+venv/
+
+# RL checkpoints / tmp logs
 tmp/
+*.zip
+*.pt
+*.pth
+
+# Videos / images
+*.mp4
+*.gif
+*.avi
+
+# IDE / editor
+.vscode/
+.idea/
+.DS_Store

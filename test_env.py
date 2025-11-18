@@ -5,7 +5,7 @@ import time
 
 import imageio.v2 as imageio
 from helicopter_env import HelicopterEnv
-from utils.video import VideoWriter
+# from utils.video import VideoWriter
 
 
 def _main():
@@ -24,11 +24,11 @@ def _main():
     metadata = []
     if args.out_dir:
         os.makedirs(args.out_dir, exist_ok=True)
-    video_writer = (
-        VideoWriter(os.path.join(args.out_dir, args.out_video), fps=30)
-        if args.out_dir and args.out_video
-        else None
-    )
+    # video_writer = (
+        # VideoWriter(os.path.join(args.out_dir, args.out_video), fps=30)
+        # if args.out_dir and args.out_video
+        # else None
+    # )
     for step in range(n_steps):
         print(f"Step {step + 1}")
         action = args.action if args.action is not None else env.action_space.sample()
@@ -46,13 +46,13 @@ def _main():
                     frame,
                     quality=100,
                 )
-            if args.out_video:
-                assert video_writer
-                if terminated:
-                    for _ in range(15):
-                        video_writer.write(frame)
-                else:
-                    video_writer.write(frame)
+            # if args.out_video:
+            #     assert video_writer
+            #     if terminated:
+            #         for _ in range(15):
+            #             video_writer.write(frame)
+            #     else:
+            #         video_writer.write(frame)
             if args.generate_metadata:
                 metadata.append(
                     {

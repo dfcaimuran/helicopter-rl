@@ -3,7 +3,7 @@ import random
 import sys
 from pathlib import Path
 from typing import Literal
-
+import os
 import pygame
 
 
@@ -115,10 +115,25 @@ class HelicopterGame:
             ],
         )
 
-        font_path = str(asset_dir / "ark-pixel-12px-monospaced-zh_cn.ttf")
-        self.font = pygame.font.Font(font_path, 12 * 2)
-        self.info_font = pygame.font.Font(font_path, 12)
-        self.distance_font = pygame.font.Font(font_path, 18)
+        # font_path = str(asset_dir / "ark-pixel-12px-monospaced-zh_cn.ttf")
+        # self.font = pygame.font.Font(font_path, 12 * 2)
+        # self.info_font = pygame.font.Font(font_path, 12)
+        # self.distance_font = pygame.font.Font(font_path, 18)
+
+        font_path = asset_dir / "ark-pixel-12px-monospaced-zh_cn.ttf"
+        if font_path.exists():
+            font_path_str = str(font_path)
+            self.font = pygame.font.Font(font_path_str, 12 * 2)
+            self.info_font = pygame.font.Font(font_path_str, 12)
+            self.distance_font = pygame.font.Font(font_path_str, 18)
+        else:
+            print(
+                f"Warning: font file not found at {font_path}, "
+                "using default system font instead."
+            )
+            self.font = pygame.font.SysFont("Arial", 12 * 2)
+            self.info_font = pygame.font.SysFont("Arial", 12)
+            self.distance_font = pygame.font.SysFont("Arial", 18)
 
         self.is_running = True
         self.show_debug_info = True
